@@ -2,61 +2,63 @@
 
 > **Leakage-Free & Cost-Sensitive Fraud Detection with Temporal Validation**
 
-A DWDM research project focused on building a practical machine-learning pipeline for detecting fraudulent banking transactions under **class imbalance, temporal constraints, and different misclassification costs**.
+A DWDM research project focused on building a practical and reproducible machine-learning pipeline for detecting fraudulent banking transactions under severe class imbalance and temporal constraints.
 
 ## 🎯 What are we trying to answer?
 
 Instead of simply asking:
 
-> *“Which model has the highest accuracy?”*
+> “Which model has the highest accuracy?”
 
 we investigate:
 
-> **“How reliable is fraud detection when we handle time, imbalance, leakage, and financial cost correctly?”**
+> “How reliable is fraud detection when time, class imbalance, data leakage, and misclassification costs are handled correctly?”
 
-## 🔬 Planned Experiments
+## 🔬 Experiments
 
-We will compare three models:
+We compare three machine-learning models:
 
-- Logistic Regression
-- Random Forest
-- XGBoost
+* Logistic Regression
+* Random Forest
+* XGBoost
 
-under three settings:
+under different approaches:
 
 ```text
 Original Data
      │
      ├── Baseline
      ├── SMOTE
-     └── Cost-Sensitive Learning
+     └── Cost-Sensitive Classification
 ```
 
 ## 📊 Evaluation
 
-Accuracy will not be our main focus because fraud is a highly imbalanced problem.
+Accuracy is not the main focus because fraud detection is highly imbalanced.
 
-**Precision • Recall • F1-Score • PR-AUC • Confusion Matrix • Expected Financial Loss**
+**Precision • Recall • F1-Score • PR-AUC • Confusion Matrix**
+
+The final evaluation also considers the practical impact of false positives and false negatives.
 
 ## ⏱️ Key Idea: Temporal Validation
 
-Transactions are ordered by time so that the model learns from **past transactions** and is evaluated on **future transactions**.
+Transactions are ordered chronologically so that the model learns from past transactions and is evaluated on future transactions.
 
 ```text
-Past ────────────────► Future
-  TRAIN                 TEST
+Past ───────────────────► Future
+       TRAIN                  TEST
 ```
 
-Learned preprocessing and SMOTE will be applied only to the training data to help prevent information leakage.
+Preprocessing is fitted using training data only, and SMOTE is applied only to the training data to help prevent information leakage.
 
 ## 🛠️ Project Workflow
 
 ```text
 Raw Data
    ↓
-Understand
+Data Understanding
    ↓
-Clean & Preprocess
+Preprocessing
    ↓
 EDA & Outlier Analysis
    ↓
@@ -64,15 +66,13 @@ Temporal Validation
    ↓
 Baseline Models
    ↓
-SMOTE
+SMOTE Experiment
    ↓
-Cost-Sensitive Learning
+Cost-Sensitive Experiment
    ↓
-Financial Loss Analysis
+Model Comparison
    ↓
-Final Comparison
-   ↓
-Streamlit Dashboard
+Final Evaluation
 ```
 
 ## 📁 Repository
@@ -82,19 +82,25 @@ banking-fraud-detection/
 ├── data/
 ├── notebooks/
 ├── results/
-├── app/
 ├── README.md
 └── requirements.txt
 ```
 
-## 🚧 Status
+## 📌 Current Results
 
-**Currently:** Dataset understanding & initial data-quality analysis.
+The final evaluation uses Logistic Regression with SMOTE as the selected candidate based on the model comparison.
 
-Upcoming: preprocessing → EDA → temporal split → baseline models → SMOTE → cost-sensitive experiments → Streamlit.
+Final temporal test performance:
+
+* **Precision:** 0.0216
+* **Recall:** 0.4545
+* **F1-Score:** 0.0412
+* **PR-AUC:** 0.0213
+
+The results also show a high number of false positives, highlighting the difficulty of achieving useful fraud detection performance under severe class imbalance.
 
 ## 🎓 Academic Project
 
 Developed as part of the **Data Warehouse and Data Mining (DWDM)** course.
 
-The goal is not to invent another algorithm, but to build a **transparent, reproducible, and practically meaningful fraud-detection evaluation pipeline**.
+The goal is not to invent another algorithm, but to build a transparent, leakage-free, temporally validated, and reproducible fraud-detection evaluation pipeline.
